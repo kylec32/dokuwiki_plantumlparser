@@ -2,7 +2,7 @@
 
 if (!defined('DOKU_INC')) die();
 
-include './PlantUmlDiagram.php';
+include_once 'PlantUmlDiagram.php';
 
 class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
     private $TAG = 'uml';
