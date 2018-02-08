@@ -6,7 +6,7 @@ class PlantUmlDiagram {
 
     public function __construct($markup) {
 		$this->markup = nl2br($markup);
-		$this->diagramUrl = "http://www.plantuml.com/plantuml/svg/".$this->encodep($markup);
+		$this->diagramUrl = "https://www.planttext.com/plantuml/svg/".$this->encodep($markup);
     }
 
     public function getMarkup() {
