@@ -2,6 +2,8 @@
 
 if (!defined('DOKU_INC')) die();
 
+include_once 'PlantUmlDiagram.php';
+
 class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
     private $TAG = 'uml';
 
@@ -38,7 +40,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      */
     public function handle($match, $state, $pos, Doku_Handler $handler){
         $markup = str_replace('</'.$this->TAG.'>','',str_replace('<'.$this->TAG.'>','',$match));
-        return new PlantUmlDiagram($markup);
+        return $markup;
     }
 
     /**
@@ -51,9 +53,9 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
-
-        $renderer->doc .= "<object data='".$data->getDiagramUrl()."' type='image/svg+xml'>";
-        $renderer->doc .= "<span>".$data->getMarkup()."</span>";
+        $diagramObject = new PlantUmlDiagram($data);
+        $renderer->doc .= "<object data='".$diagramObject->getDiagramUrl()."' type='image/svg+xml'>";
+        $renderer->doc .= "<span>".$diagramObject->getMarkup()."</span>";
         $renderer->doc .= "</object>";
 
         return true;
