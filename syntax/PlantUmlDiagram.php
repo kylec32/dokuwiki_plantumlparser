@@ -2,19 +2,28 @@
 if (!class_exists('PlantUmlDiagram')) {
     class PlantUmlDiagram {
         private $markup;
-        private $diagramUrl;
+        private $encoded;
+        private $basePath = "https://www.planttext.com/plantuml/";
 
         public function __construct($markup) {
 			$this->markup = nl2br($markup);
-			$this->diagramUrl = "https://www.planttext.com/plantuml/svg/".$this->encodep($markup);
+            $this->encoded = $this->encodep($markup);
         }
 
         public function getMarkup() {
             return $this->markup;
         }
 
-        public function getDiagramUrl() {
-            return $this->diagramUrl;
+        public function getSVGDiagramUrl() {
+            return $this->basePath."svg/".$this->encoded;
+        }
+
+        public function getPNGDiagramUrl() {
+            return $this->basePath."png/".$this->encoded;
+        }
+
+        public function getTXTDiagramUrl() {
+            return $this->basePath."txt/".$this->encoded;
         }
 
         private function encodep($text) {
