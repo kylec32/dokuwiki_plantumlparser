@@ -6,7 +6,7 @@ if (!class_exists('PlantUmlDiagram')) {
         private $basePath = "https://www.planttext.com/plantuml/";
 
         public function __construct($markup) {
-			$this->markup = nl2br($markup);
+            $this->markup = nl2br($markup);
             $this->encoded = $this->encodep($markup);
         }
 
