@@ -38,9 +38,20 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      * @param Doku_Handler    $handler The handler
      * @return array Data for the renderer
      */
-    public function handle($match, $state, $pos, Doku_Handler $handler){
-        $markup = str_replace('</'.$this->TAG.'>','',str_replace('<'.$this->TAG.'>','',$match));
-        return $markup;
+    public function handle($match, $state, $pos, Doku_Handler $handler)
+    {
+        $markup        = str_replace('</' . $this->TAG . '>', '', str_replace('<' . $this->TAG . '>', '', $match));
+        $diagramObject = new PlantUmlDiagram($markup);
+
+        return [
+            'svg' => $diagramObject->getSVG(),
+            'id' => sha1($diagramObject->getSVGDiagramUrl()),
+            'url' => [
+                'svg' => $diagramObject->getSVGDiagramUrl(),
+                'png' => $diagramObject->getPNGDiagramUrl(),
+                'txt' => $diagramObject->getTXTDiagramUrl(),
+            ],
+        ];
     }
 
     /**
@@ -53,17 +64,15 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
-        $diagramObject = new PlantUmlDiagram($data);
-        $renderer->doc .= "<span id='plant-uml-diagram-".md5($diagramObject->getSVGDiagramUrl())."'>";
-        $renderer->doc .= "<object data='".$diagramObject->getSVGDiagramUrl()."' type='image/svg+xml'>";
-        $renderer->doc .= "<span>".$diagramObject->getMarkup()."</span>";
-        $renderer->doc .= "</object>";
+
+        $renderer->doc .= "<div id='plant-uml-diagram-".$data['id']."'>";
+        $renderer->doc .= $data['svg'];
         $renderer->doc .= "<div>";
-        $renderer->doc .= "<a target='_blank' href='".$diagramObject->getSVGDiagramUrl()."'>SVG</a> | ";
-        $renderer->doc .= "<a target='_blank' href='".$diagramObject->getPNGDiagramUrl()."'>PNG</a> | ";
-        $renderer->doc .= "<a target='_blank' href='".$diagramObject->getTXTDiagramUrl()."'>TXT</a>";
+        $renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>SVG</a> | ";
+        $renderer->doc .= "<a target='_blank' href='".$data['url']['png']."'>PNG</a> | ";
+        $renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>TXT</a>";
         $renderer->doc .= "</div>";
-        $renderer->doc .= "</span>";
+        $renderer->doc .= "</div>";
 
         return true;
     }
