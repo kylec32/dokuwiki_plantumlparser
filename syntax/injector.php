@@ -54,9 +54,16 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
         $diagramObject = new PlantUmlDiagram($data);
-        $renderer->doc .= "<object data='".$diagramObject->getDiagramUrl()."' type='image/svg+xml'>";
+        $renderer->doc .= "<span id='plant-uml-diagram-".md5($diagramObject->getSVGDiagramUrl())."'>";
+        $renderer->doc .= "<object data='".$diagramObject->getSVGDiagramUrl()."' type='image/svg+xml'>";
         $renderer->doc .= "<span>".$diagramObject->getMarkup()."</span>";
         $renderer->doc .= "</object>";
+        $renderer->doc .= "<div>";
+        $renderer->doc .= "<a target='_blank' href='".$diagramObject->getSVGDiagramUrl()."'>SVG</a> | ";
+        $renderer->doc .= "<a target='_blank' href='".$diagramObject->getPNGDiagramUrl()."'>PNG</a> | ";
+        $renderer->doc .= "<a target='_blank' href='".$diagramObject->getTXTDiagramUrl()."'>TXT</a>";
+        $renderer->doc .= "</div>";
+        $renderer->doc .= "</span>";
 
         return true;
     }
