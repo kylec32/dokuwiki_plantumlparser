@@ -14,6 +14,16 @@ if (!class_exists('PlantUmlDiagram')) {
             return $this->markup;
         }
 
+        /**
+         * Get the SVG code
+         *
+         * @return string
+         */
+        public function getSVG()
+        {
+            return (new DokuHTTPClient())->get($this->getSVGDiagramUrl());
+        }
+
         public function getSVGDiagramUrl() {
             return $this->basePath."svg/".$this->encoded;
         }
