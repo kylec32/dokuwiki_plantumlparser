@@ -77,7 +77,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         $renderer->doc .= "<div>";
         $renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>SVG</a> | ";
         $renderer->doc .= "<a target='_blank' href='".$data['url']['png']."'>PNG</a> | ";
-        $renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>TXT</a>";
+        $renderer->doc .= "<a target='_blank' href='".$data['url']['txt']."'>TXT</a>";
         $renderer->doc .= "</div>";
         $renderer->doc .= "</div>";
 
