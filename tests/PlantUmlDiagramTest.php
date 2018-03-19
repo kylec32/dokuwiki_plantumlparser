@@ -8,7 +8,7 @@ require_once 'syntax/PlantUmlDiagram.php';
 final class PlantUMLDiagramTest extends TestCase
 {
 
-    public function testSvgUrlGeneratedCorrectly(): void
+    public function testSvgUrlGeneratedCorrectly()
     {
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
@@ -18,7 +18,7 @@ final class PlantUMLDiagramTest extends TestCase
         );
     }
 
-    public function testPngUrlGeneratedCorrectly(): void
+    public function testPngUrlGeneratedCorrectly()
     {
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
@@ -28,7 +28,7 @@ final class PlantUMLDiagramTest extends TestCase
         );
     }
 
-    public function testTxtUrlGeneratedCorrectly(): void
+    public function testTxtUrlGeneratedCorrectly()
     {
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
@@ -38,7 +38,7 @@ final class PlantUMLDiagramTest extends TestCase
         );
     }
 
-    public function testGetMarkup(): void
+    public function testGetMarkup()
     {
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
