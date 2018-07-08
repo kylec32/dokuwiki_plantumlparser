@@ -40,7 +40,7 @@ final class PlantUMLDiagramTest extends TestCase
 
     public function testForeignCharacterGeneratedCorrectly()
     {
-        $diagramObject = new PlantUmlDiagram("Thomas -> Petra : bitte aus Spaß die Türe öffnen");
+        $diagramObject = new PlantUmlDiagram("@startuml\nThomas -> Petra : bitte aus Spaß die Türe öffnen\n@enduml");
 
         $this->assertEquals(
             'https://www.planttext.com/plantuml/png/ut8eBaaiAYdDpU4AoSZFJInMqBLJ24WjAKfKi598oYmfILL8B2rM22v8F3nV8IKpLI7ay9wYL8N3szBIybBpk1nIyr90UW40',
