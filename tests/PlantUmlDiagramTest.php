@@ -43,7 +43,7 @@ final class PlantUMLDiagramTest extends TestCase
         $diagramObject = new PlantUmlDiagram("@startuml\nThomas -> Petra : bitte aus Spaß die Türe öffnen\n@enduml");
 
         $this->assertEquals(
-            'https://www.planttext.com/plantuml/png/ut8eBaaiAYdDpU4AoSZFJInMqBLJ24WjAKfKi598oYmfILL8B2rM22v8F3nV8IKpLI7ay9wYL8N3szBIybBpk1nIyr90UW40',
+            'https://www.planttext.com/plantuml/png/SoWkIImgAStDuGh9oCzDB5RGjLC8I2qfIbImKaZAB2b9LKWiBLO8BaWyF5yX9JDL8UJmdg9KXSFRqjBoKlEu75BpKe1w0G00',
             $diagramObject->getPNGDiagramUrl()
         );
     }
