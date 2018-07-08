@@ -37,8 +37,7 @@ if (!class_exists('PlantUmlDiagram')) {
         }
 
         private function encodep($text) {
-            $data = utf8_encode($text);
-            $compressed = gzdeflate($data, 9);
+            $compressed = gzdeflate($text, 9);
             return $this->encode64($compressed);
        }
 

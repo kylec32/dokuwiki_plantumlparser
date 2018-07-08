@@ -38,6 +38,16 @@ final class PlantUMLDiagramTest extends TestCase
         );
     }
 
+    public function testForeignCharacterGeneratedCorrectly()
+    {
+        $diagramObject = new PlantUmlDiagram("Thomas -> Petra : bitte aus Spaß die Türe öffnen");
+
+        $this->assertEquals(
+            'https://www.planttext.com/plantuml/png/ut8eBaaiAYdDpU4AoSZFJInMqBLJ24WjAKfKi598oYmfILL8B2rM22v8F3nV8IKpLI7ay9wYL8N3szBIybBpk1nIyr90UW40',
+            $diagramObject->getPNGDiagramUrl()
+        );
+    }
+
     public function testGetMarkup()
     {
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
