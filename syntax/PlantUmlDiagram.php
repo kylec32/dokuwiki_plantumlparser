@@ -3,7 +3,7 @@ if (!class_exists('PlantUmlDiagram')) {
     class PlantUmlDiagram {
         private $markup;
         private $encoded;
-        private $basePath = "https://www.planttext.com/plantuml/";
+        private $basePath = "https://www.plantuml.com/plantuml/";
 
         public function __construct($markup) {
             $this->markup = nl2br($markup);
