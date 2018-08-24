@@ -13,7 +13,7 @@ final class PlantUMLDiagramTest extends TestCase
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
         $this->assertEquals(
-            'https://www.planttext.com/plantuml/svg/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
+            'https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
             $diagramObject->getSVGDiagramUrl()
         );
     }
@@ -23,7 +23,7 @@ final class PlantUMLDiagramTest extends TestCase
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
         $this->assertEquals(
-            'https://www.planttext.com/plantuml/png/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
+            'https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
             $diagramObject->getPNGDiagramUrl()
         );
     }
@@ -33,7 +33,7 @@ final class PlantUMLDiagramTest extends TestCase
         $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
 
         $this->assertEquals(
-            'https://www.planttext.com/plantuml/txt/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
+            'https://www.plantuml.com/plantuml/txt/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
             $diagramObject->getTXTDiagramUrl()
         );
     }
@@ -43,7 +43,7 @@ final class PlantUMLDiagramTest extends TestCase
         $diagramObject = new PlantUmlDiagram("@startuml\nThomas -> Petra : bitte aus Spaß die Türe öffnen\n@enduml");
 
         $this->assertEquals(
-            'https://www.planttext.com/plantuml/png/SoWkIImgAStDuGh9oCzDB5RGjLC8I2qfIbImKaZAB2b9LKWiBLO8BaWyF5yX9JDL8UJmdg9KXSFRqjBoKlEu75BpKe1w0G00',
+            'https://www.plantuml.com/plantuml/png/SoWkIImgAStDuGh9oCzDB5RGjLC8I2qfIbImKaZAB2b9LKWiBLO8BaWyF5yX9JDL8UJmdg9KXSFRqjBoKlEu75BpKe1w0G00',
             $diagramObject->getPNGDiagramUrl()
         );
     }
