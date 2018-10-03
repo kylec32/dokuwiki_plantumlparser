@@ -7,7 +7,7 @@ if (!class_exists('PlantUmlDiagram')) {
 
         public function __construct($markup) {
             $this->markup = nl2br($markup);
-            $this->encoded = $this->encodep($markup);
+            $this->encoded = $this->encodep($this->stripSearchTags($markup));
         }
 
         public function getMarkup() {
@@ -34,6 +34,10 @@ if (!class_exists('PlantUmlDiagram')) {
 
         public function getTXTDiagramUrl() {
             return $this->basePath."txt/".$this->encoded;
+        }
+
+        private function stripSearchTags($text) {
+            return str_replace("</span>", "", str_replace("<span class=\"search_hit\">", "", $text));
         }
 
         private function encodep($text) {
