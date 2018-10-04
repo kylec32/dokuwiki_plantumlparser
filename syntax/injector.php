@@ -70,7 +70,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         if(strlen($data['svg']) > 0) {
             $renderer->doc .= $data['svg'];
         } else {
-            $renderer->doc .= "<object data3='".$data['url']['svg']."' type='image/svg+xml'>";
+            $renderer->doc .= "<object data='".$data['url']['svg']."1' type='image/svg+xml'>";
             $renderer->doc .= "<span>".$data['markup']."</span>";
             $renderer->doc .= "</object>";
         }
