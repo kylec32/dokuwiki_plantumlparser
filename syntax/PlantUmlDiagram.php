@@ -37,7 +37,8 @@ if (!class_exists('PlantUmlDiagram')) {
         }
 
         private function stripSearchTags($text) {
-            return str_replace("</span>", "", str_replace("<span class=\"search_hit\">", "", $text));
+            return $text;
+            // return str_replace("</span>", "", str_replace("<span class=\"search_hit\">", "", $text));
         }
 
         private function encodep($text) {
