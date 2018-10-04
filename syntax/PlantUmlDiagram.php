@@ -6,7 +6,7 @@ if (!class_exists('PlantUmlDiagram')) {
         private $basePath = "https://www.plantuml.com/plantuml/";
 
         public function __construct($markup) {
-            $this->markup = nl2br($markup);
+            $this->markup = nl2br($this->stripSearchTags($markup));
             $this->encoded = $this->encodep($this->stripSearchTags($markup));
         }
 
@@ -38,7 +38,7 @@ if (!class_exists('PlantUmlDiagram')) {
 
         private function stripSearchTags($text) {
             //return $text;
-            return str_replace("</span>", "", str_replace("hello", "_____", $text));
+            return str_replace("</span>", "", str_replace("<span class=\"search_hit\">", "", $text));
         }
 
         private function encodep($text) {
