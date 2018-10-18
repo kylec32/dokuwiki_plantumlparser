@@ -71,7 +71,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             // $renderer->doc .= $data['svg'];
             $renderer->doc .= "<img src=\"data:image/svg+xml;base64,".base64_encode($data['svg'])."\">";
         } else {
-            $renderer->doc .= "<img src=\"".$data['url']['svg']."\">";
+            $renderer->doc .= "<img src=\"".$data['url']['png']."\">";
             // $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
             // $renderer->doc .= "<span>".$data['markup']."</span>";
             // $renderer->doc .= "</object>";
