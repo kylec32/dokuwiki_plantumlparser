@@ -44,7 +44,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         $diagramObject = new PlantUmlDiagram($markup);
 
         return [
-            'svg' => $diagramObject->getSVG(),
+            'svg' => strstr($diagramObject->getSVG(), "<svg"),
             'markup' => $diagramObject->getMarkup(),
             'id' => sha1($diagramObject->getSVGDiagramUrl()),
             'url' => [
@@ -68,7 +68,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
 
         $renderer->doc .= "<div id='plant-uml-diagram-".$data['id']."'>";
         if(strlen($data['svg']) > 0) {
-            $renderer->doc .=  strstr($data['svg'], "<svg");
+            $renderer->doc .=  $data['svg'];
         } else {
             $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
             $renderer->doc .= "<span>".$data['markup']."</span>";
