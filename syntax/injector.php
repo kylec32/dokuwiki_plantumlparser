@@ -44,7 +44,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         $diagramObject = new PlantUmlDiagram($markup);
 
         return [
-            'svg' => $diagramObject->getSVG(),
+            'svg' => strstr($diagramObject->getSVG(), "<svg"),
             'markup' => $diagramObject->getMarkup(),
             'id' => sha1($diagramObject->getSVGDiagramUrl()),
             'url' => [
