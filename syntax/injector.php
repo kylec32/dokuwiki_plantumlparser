@@ -68,7 +68,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
 
         $renderer->doc .= "<div id='plant-uml-diagram-".$data['id']."'>";
         if(strlen($data['svg']) > 0) {
-            $renderer->doc .=  $data['svg'];
+            $renderer->doc .= $data['svg'];
         } else {
             $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
             $renderer->doc .= "<span>".$data['markup']."</span>";
