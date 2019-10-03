@@ -31,4 +31,4 @@ and results in:
 # Contributors
 * [Kyle Carter](https://github.com/kylec32)
 * [Antoine Aflalo](https://github.com/Belphemur)
-
+* [Eduardo Mozart de Oliveira](https://github.com/coldscientist)
