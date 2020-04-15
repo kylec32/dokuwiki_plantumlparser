@@ -10,7 +10,7 @@ final class PlantUMLDiagramTest extends TestCase
 
     public function testSvgUrlGeneratedCorrectly()
     {
-        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
+        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml","https://www.plantuml.com/plantuml/");
 
         $this->assertEquals(
             'https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
@@ -20,7 +20,7 @@ final class PlantUMLDiagramTest extends TestCase
 
     public function testPngUrlGeneratedCorrectly()
     {
-        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
+        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml","https://www.plantuml.com/plantuml/");
 
         $this->assertEquals(
             'https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
@@ -30,7 +30,7 @@ final class PlantUMLDiagramTest extends TestCase
 
     public function testTxtUrlGeneratedCorrectly()
     {
-        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
+        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml","https://www.plantuml.com/plantuml/");
 
         $this->assertEquals(
             'https://www.plantuml.com/plantuml/txt/SoWkIImgAStDuKhCoKnELT2rKqZAJx9IgCnNACz8B54eBU02ydNjmB9M2ddv9GgvfSaPN0wfUIb0NG00',
@@ -40,7 +40,7 @@ final class PlantUMLDiagramTest extends TestCase
 
     public function testForeignCharacterGeneratedCorrectly()
     {
-        $diagramObject = new PlantUmlDiagram("@startuml\nThomas -> Petra : bitte aus Spaß die Türe öffnen\n@enduml");
+        $diagramObject = new PlantUmlDiagram("@startuml\nThomas -> Petra : bitte aus Spaß die Türe öffnen\n@enduml","https://www.plantuml.com/plantuml/");
 
         $this->assertEquals(
             'https://www.plantuml.com/plantuml/png/SoWkIImgAStDuGh9oCzDB5RGjLC8I2qfIbImKaZAB2b9LKWiBLO8BaWyF5yX9JDL8UJmdg9KXSFRqjBoKlEu75BpKe1w0G00',
@@ -50,7 +50,7 @@ final class PlantUMLDiagramTest extends TestCase
 
     public function testGetMarkup()
     {
-        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml");
+        $diagramObject = new PlantUmlDiagram("@startuml\nalice -> bob: yo what up\nbob->alice: not much\n@enduml","https://www.plantuml.com/plantuml/");
 
         $this->assertEquals(
             '@startuml<br />
