@@ -41,7 +41,16 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
     public function handle($match, $state, $pos, Doku_Handler $handler)
     {
         $markup        = str_replace('</' . $this->TAG . '>', '', str_replace('<' . $this->TAG . '>', '', $match));
-        $diagramObject = new PlantUmlDiagram($markup);
+        $plantUmlUrl   = trim($this->getConf('PlantUMLURL'));
+		if(!$plantUmlUrl)
+		{
+			$plantUmlUrl = "https://www.plantuml.com/plantuml/";
+		}
+		else
+		{
+			$plantUmlUrl = trim($plantUmlUrl, '/') . '/';
+		}
+        $diagramObject = new PlantUmlDiagram($markup,$plantUmlUrl);
 
         return [
             'svg' => strstr($diagramObject->getSVG(), "<svg"),
