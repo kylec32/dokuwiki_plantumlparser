@@ -76,14 +76,10 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         if($mode != 'xhtml') return false;
 
         $renderer->doc .= "<div id='plant-uml-diagram-".$data['id']."'>";
-        if(strlen($data['svg']) > 0) {
-			if(is_a($renderer,'renderer_plugin_dw2pdf') && (preg_match("/(@startlatex|@startmath|<math|<latex)/", $data['markup']))){
-				$renderer->doc .= "<img src='".$data['url']['png']."'>";
-			}
-			else {
-				$renderer->doc .= $data['svg'];
-			}
+        if(preg_match("/(@startlatex|@startmath|<math|<latex)/", $data['markup'])) {
+			$renderer->doc .= "<img src='".$data['url']['png']."'>";
         } else {
+            $renderer->doc .= $data['svg'];
             $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
             $renderer->doc .= "<span>".$data['markup']."</span>";
             $renderer->doc .= "</object>";
