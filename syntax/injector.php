@@ -74,6 +74,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
+        $plantUMLHideLinkSection = $this->getConf('PlantUMLHideLinkSection');
 
         $renderer->doc .= "<div id='plant-uml-diagram-".$data['id']."'>";
         if(strlen($data['svg']) > 0) {
@@ -88,12 +89,15 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= "<span>".$data['markup']."</span>";
             $renderer->doc .= "</object>";
         }
-        $renderer->doc .= "<div id=\"plantumlparse_link_section\">";
-        $renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>SVG</a> | ";
-        $renderer->doc .= "<a target='_blank' href='".$data['url']['png']."'>PNG</a> | ";
-        $renderer->doc .= "<a target='_blank' href='".$data['url']['txt']."'>TXT</a>";
-        $renderer->doc .= "</div>";
-        $renderer->doc .= "</div>";
+	
+	if ($plantUMLHideLinkSection != 1) {
+		$renderer->doc .= "<div id=\"plantumlparse_link_section\">";
+		$renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>SVG</a> | ";
+		$renderer->doc .= "<a target='_blank' href='".$data['url']['png']."'>PNG</a> | ";
+		$renderer->doc .= "<a target='_blank' href='".$data['url']['txt']."'>TXT</a>";
+		$renderer->doc .= "</div>";
+	}
+	$renderer->doc .= "</div>";
 
         return true;
     }
