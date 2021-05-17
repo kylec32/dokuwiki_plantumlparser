@@ -56,7 +56,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             'svg' => strstr($diagramObject->getSVG(), "<svg"),
             'markup' => $diagramObject->getMarkup(),
             'id' => sha1($diagramObject->getSVGDiagramUrl()),
-            'include_links' -> $this->getConf('DefaultShowLinks'),
+            'include_links' => $this->getConf('DefaultShowLinks'),
             'url' => [
                 'svg' => $diagramObject->getSVGDiagramUrl(),
                 'png' => $diagramObject->getPNGDiagramUrl(),
