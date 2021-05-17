@@ -90,7 +90,6 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= "</object>";
         }
         if($data['include_links'] == "1") {
-            // $renderer->doc .= "<div>".$data['include_links']."</div>";
             $renderer->doc .= "<div id=\"plantumlparse_link_section\">";
             $renderer->doc .= "<a target='_blank' href='".$data['url']['svg']."'>SVG</a> | ";
             $renderer->doc .= "<a target='_blank' href='".$data['url']['png']."'>PNG</a> | ";
