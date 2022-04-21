@@ -26,7 +26,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('<'.$this->TAG.'>\n*.*?\n*</'.$this->TAG.'>',$mode,'plugin_plantumlparser_injector');
+        $this->Lexer->addSpecialPattern('<uml.*?>\n.*?\n</uml>', $mode, 'plugin_plantumlparser_injector');
     }
 
     /**
@@ -40,18 +40,27 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      */
     public function handle($match, $state, $pos, Doku_Handler $handler)
     {
-        $markup        = str_replace('</' . $this->TAG . '>', '', str_replace('<' . $this->TAG . '>', '', $match));
+        $re = '/(?P<tag1><uml.*>)(?P<markup>(?s).*)(?P<tag2>\<\/uml\>)/m';
+        preg_match($re, $match, $matches0);
+        $markup = $matches0['markup'];
         $plantUmlUrl   = trim($this->getConf('PlantUMLURL'));
-		if(!$plantUmlUrl)
-		{
-			$plantUmlUrl = "https://www.plantuml.com/plantuml/";
-		}
-		else
-		{
-			$plantUmlUrl = trim($plantUmlUrl, '/') . '/';
-		}
+        if(!$plantUmlUrl)
+        {
+            $plantUmlUrl = "https://www.plantuml.com/plantuml/";
+        }
+        else
+        {
+            $plantUmlUrl = trim($plantUmlUrl, '/') . '/';
+        }
         $diagramObject = new PlantUmlDiagram($markup,$plantUmlUrl);
-
+        
+        # Get scale information from uml tag
+        $scale = '';
+        $re = '/scale="(?P<scale>[0-9]+%?)"/m';
+        if (preg_match($re, $match, $matches)) {
+                $scale = $matches['scale'];
+        }
+        
         return [
             'svg' => strstr($diagramObject->getSVG(), "<svg"),
             'markup' => $diagramObject->getMarkup(),
@@ -62,6 +71,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
                 'png' => $diagramObject->getPNGDiagramUrl(),
                 'txt' => $diagramObject->getTXTDiagramUrl(),
             ],
+            'scale' => $scale,
         ];
     }
 
@@ -75,15 +85,25 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer $renderer, $data) {
         if($mode != 'xhtml') return false;
-
+        
         $renderer->doc .= "<div id='plant-uml-diagram-".$data['id']."'>";
         if(strlen($data['svg']) > 0) {
-			if(is_a($renderer,'renderer_plugin_dw2pdf') && (preg_match("/(@startlatex|@startmath|<math|<latex)/", $data['markup']))){
-				$renderer->doc .= "<img src='".$data['url']['png']."'>";
-			}
-			else {
-				$renderer->doc .= $data['svg'];
-			}
+            if(is_a($renderer,'renderer_plugin_dw2pdf') && (preg_match("/(@startlatex|@startmath|<math|<latex)/", $data['markup']))){
+                $renderer->doc .= "<img src='".$data['url']['png']."'>";
+            }
+            else {
+                # check for scale attribute, and replace it.
+                if ($data['scale'] != '')
+                {
+                    $scale = $data['scale'];
+                    $re = '/style="width:[0-9]+px;height:[0-9]+px/m';
+                    $renderer->doc .= preg_replace($re, 'style="width:'.$scale.';height:'.$scale, $data['svg']);
+                }
+                else
+                {
+                    $renderer->doc .= $data['svg'];
+                }
+            }
         } else {
             $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
             $renderer->doc .= "<span>".$data['markup']."</span>";
@@ -96,7 +116,6 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= "<a target='_blank' href='".$data['url']['txt']."'>TXT</a>";
             $renderer->doc .= "</div>";
         }
-        
         $renderer->doc .= "</div>";
 
         return true;
