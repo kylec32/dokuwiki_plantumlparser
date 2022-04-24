@@ -104,22 +104,13 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
                     $replacementSize = 'style="';
                     if($data['height'] != '') {
                         $replacementSize .= 'height:'.$data['height'].';';
-                        // $data['svg'] = preg_replace('/height:[0-9]+px/m', 'height:'.$data['height'], $data['svg']);
                     }
                     if($data['width'] != '') {
                         $replacementSize .= 'width:'.$data['width'].';';
-                        //$data['svg'] = preg_replace('/width:[0-9]+px/m', 'width:'.$data['width'], $data['svg']);
                     }
                     $re = '/style="width:[0-9]+px;height:[0-9]+px;/m';
                     $renderer->doc .= preg_replace($re, $replacementSize, $data['svg']);
                 }
-                
-                // if ($data['scale'] != '')
-                // {
-                //     $scale = $data['scale'];
-                //     $re = '/style="width:[0-9]+px;height:[0-9]+px/m';
-                //     $renderer->doc .= preg_replace($re, 'style="width:'.$scale.';height:'.$scale, $data['svg']);
-                // }
                 else
                 {
                     $renderer->doc .= $data['svg'];
