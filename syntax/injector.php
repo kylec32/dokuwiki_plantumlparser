@@ -54,11 +54,17 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         }
         $diagramObject = new PlantUmlDiagram($markup,$plantUmlUrl);
         
-        # Get scale information from uml tag
-        $scale = '';
-        $re = '/scale="(?P<scale>[0-9]+%?)"/m';
+        # Get height and width information from uml tag
+        $height = '';
+        $re = '/height="(?P<height>[0-9]+%?)"/m';
         if (preg_match($re, $matches0['tag1'], $matches)) {
-                $scale = $matches['scale'];
+                $height = $matches['height'];
+        }
+
+        $width = '';
+        $re = '/width="(?P<width>[0-9]+%?)"/m';
+        if (preg_match($re, $matches0['tag1'], $matches)) {
+                $width = $matches['width'];
         }
         
         return [
@@ -71,7 +77,8 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
                 'png' => $diagramObject->getPNGDiagramUrl(),
                 'txt' => $diagramObject->getTXTDiagramUrl(),
             ],
-            'scale' => $scale,
+            'height' => $height,
+            'width' => $width,
         ];
     }
 
@@ -93,16 +100,30 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             }
             else {
                 # check for scale attribute, and replace it.
-                if ($data['scale'] != '')
-                {
-                    $scale = $data['scale'];
-                    $re = '/style="width:[0-9]+px;height:[0-9]+px/m';
-                    $renderer->doc .= preg_replace($re, 'style="width:'.$scale.';height:'.$scale, $data['svg']);
+                if($data['height'] != '' || $data['width'] != '') {
+                    $replacementSize = 'style="';
+                    if($data['height'] != '') {
+                        $replacementSize .= 'height:'.$data['height'].';';
+                        // $data['svg'] = preg_replace('/height:[0-9]+px/m', 'height:'.$data['height'], $data['svg']);
+                    }
+                    if($data['width'] != '') {
+                        $replacementSize .= 'width:'.$data['width'].';';
+                        //$data['svg'] = preg_replace('/width:[0-9]+px/m', 'width:'.$data['width'], $data['svg']);
+                    }
+                    $re = '/style="width:[0-9]+px;height:[0-9]+px;/m';
+                    $renderer->doc .= preg_replace($re, $replacementSize, $data['svg']);
                 }
-                else
-                {
+                
+                // if ($data['scale'] != '')
+                // {
+                //     $scale = $data['scale'];
+                //     $re = '/style="width:[0-9]+px;height:[0-9]+px/m';
+                //     $renderer->doc .= preg_replace($re, 'style="width:'.$scale.';height:'.$scale, $data['svg']);
+                // }
+                // else
+                // {
                     $renderer->doc .= $data['svg'];
-                }
+                // }
             }
         } else {
             $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
