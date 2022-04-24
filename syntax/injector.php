@@ -57,7 +57,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         # Get scale information from uml tag
         $scale = '';
         $re = '/scale="(?P<scale>[0-9]+%?)"/m';
-        if (preg_match($re, $match, $matches)) {
+        if (preg_match($re, $matches0['tag1'], $matches)) {
                 $scale = $matches['scale'];
         }
         
