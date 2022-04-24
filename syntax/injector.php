@@ -120,10 +120,10 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
                 //     $re = '/style="width:[0-9]+px;height:[0-9]+px/m';
                 //     $renderer->doc .= preg_replace($re, 'style="width:'.$scale.';height:'.$scale, $data['svg']);
                 // }
-                // else
-                // {
+                else
+                {
                     $renderer->doc .= $data['svg'];
-                // }
+                }
             }
         } else {
             $renderer->doc .= "<object data='".$data['url']['svg']."' type='image/svg+xml'>";
