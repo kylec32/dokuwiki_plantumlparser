@@ -15,6 +15,30 @@ if (!class_exists('PlantUmlDiagram')) {
             return $this->markup;
         }
 
+ /**
+  * call plantuml via curl to cope with non-caching plantuml-server
+  *
+  * @param string       $url    complete url of plantuml-call
+  * @return    response from plantuml-server
+  */
+ public function callCurl($url) {
+        $ch=curl_init();
+        $timeout=5;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYSTATUS, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        // curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        // curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+        // curl_setopt($ch, CURLOPT_VERBOSE, 1)
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        // Get URL content
+        $lines_string=curl_exec($ch);
+        // close handle to release resources
+        curl_close($ch);
+        return $lines_string;
+}
+
         /**
          * Get the SVG code
          *
@@ -22,7 +46,8 @@ if (!class_exists('PlantUmlDiagram')) {
          */
         public function getSVG()
         {
-            return (new DokuHTTPClient())->get($this->getSVGDiagramUrl());
+            // return (new DokuHTTPClient())->get($this->getSVGDiagramUrl());
+	    return $this->callCurl($this->getSVGDiagramUrl());	
         }
 
         public function getSVGDiagramUrl() {
