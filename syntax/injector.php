@@ -125,12 +125,10 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
     protected function _render_odt(Doku_Renderer $renderer, $state, $txtdata) {
         // if($state === DOKU_LEXER_UNMATCHED) {
 			if(preg_match("/(@startlatex|@startmath|<math|<latex|ditaa)/", $txtdata['markup'])){
-			    $im = imagecreatefromstring((new DokuHTTPClient())->get($txtdata['url']['png']));
-				$width = imagesx($im);
-				$height = imagesy($im);
+				list($width, $height) = $renderer->_odtGetImageSize($txtdata['url']['png']);
 				$renderer->_odtAddImage($txtdata['url']['png'], $width, $height);
 			} else {
-			    list($width, $height) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
+				list($width, $height) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
 				// $renderer->unformatted("Width: ".$width."cm");
 				// $renderer->unformatted("Height: ".$height."cm");
 				$renderer->_addStringAsSVGImage($txtdata['svg'], $width, $height);
