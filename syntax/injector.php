@@ -130,10 +130,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
 				$height = imagesy($im);
 				$renderer->_odtAddImage($txtdata['url']['png'], $width, $height);
 			} else {
-				$dim=$this->_extract_XY_4svg( $txtdata['svg'] );
-				// $renderer->unformatted("Width: ".$dim[0]."px");
-				// $renderer->unformatted("Height: ".$dim[1]."px");
-				list($width, $height) = $this->_odtGetImageSize(NULL, $dim[0], $dim[1]);
+			    list($width, $height) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
 				// $renderer->unformatted("Width: ".$width."cm");
 				// $renderer->unformatted("Height: ".$height."cm");
 				$renderer->_addStringAsSVGImage($txtdata['svg'], $width, $height);
@@ -141,70 +138,5 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         // }
 
         return true;
-    }
-
-    /**
-     * Find the SVG X and Y dimensions in the svg string of the image.
-     * it searches for 'width="nnnpx" height="mmmpx"' in the first
-     * given string and returns the dimension in inch.
-     *
-     * @param String  $svgtxt  The svg string to inspect
-     * @return array the X and Y dimensions suitable as SVG dimensions
-     */
-    protected function _extract_XY_4svg( $svgtxt ) {
-        // $sizes=array();
-        // preg_match( '/width="(.*?)px" height="(.*?)px"/', $svgtxt, $sizes );
-		// array_shift($sizes);
-
-		$matchesWidth=array();
-		$matchesHeight=array();
-		preg_match( '/<svg.*?width="((\d+))/', $svgtxt, $matchesWidth);
-		preg_match( '/<svg.*?height="((\d+))/', $svgtxt, $matchesHeight);
-		$sizes = array($matchesWidth[1], $matchesHeight[1]);
-
-        // assume a 96 dpi screen
-        // return array_map( function($v) { return ($v/96.0)."in"; }, $sizes );
-
-		return $sizes;
-    }
-
-	protected function _odtGetImageSize($src, $width = NULL, $height = NULL){
-        if (file_exists($src)) {
-            $info  = getimagesize($src);
-            if(!$width){
-                $width  = $info[0];
-                $height = $info[1];
-            }else{
-                $height = round(($width * $info[1]) / $info[0]);
-            }
-        }
-
-        // convert from pixel to centimeters
-        if ($width) $width = (($width/96.0)*2.54);
-        if ($height) $height = (($height/96.0)*2.54);
-
-        if ($width && $height) {
-            // Don't be wider than the page
-            if ($width >= 17){ // FIXME : this assumes A4 page format with 2cm margins
-                $width = $width.'cm"  style:rel-width="100%';
-                $height = $height.'cm"  style:rel-height="scale';
-            } else {
-                $width = $width.'cm';
-                $height = $height.'cm';
-            }
-        } else {
-            // external image and unable to download, fallback
-            if ($width) {
-                $width = $width."cm";
-            } else {
-                $width = '" svg:rel-width="100%';
-            }
-            if ($height) {
-                $height = $height."cm";
-            } else {
-                $height = '" svg:rel-height="100%';
-            }
-        }
-        return array($width, $height);
     }
 }
