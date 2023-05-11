@@ -125,13 +125,17 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
     protected function _render_odt(Doku_Renderer $renderer, $state, $txtdata) {
         // if($state === DOKU_LEXER_UNMATCHED) {
 			if(preg_match("/(@startlatex|@startmath|<math|<latex|ditaa)/", $txtdata['markup'])){
-				list($width, $height) = $renderer->_odtGetImageSize($txtdata['url']['png']);
-				$renderer->_odtAddImage($txtdata['url']['png'], $width, $height);
+				list($widthPngInCm, $heightPngInCm) = $renderer->_odtGetImageSize($txtdata['url']['png']);
+				$renderer->_odtAddImage($txtdata['url']['png'], $widthPngInCm, $heightPngInCm);
 			} else {
-				list($width, $height) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
+				list($widthSvgInCm, $heightSvgInCm) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
 				// $renderer->unformatted("Width: ".$width."cm");
 				// $renderer->unformatted("Height: ".$height."cm");
-				$renderer->_addStringAsSVGImage($txtdata['svg'], $width, $height);
+				// When exporting to ODT format always make the SVG as wide
+				// as the whole page without margins (but keep the width/height relation!). 
+				$widthInCm = $renderer->_getAbsWidthMindMargins();
+				$heightInCm = $widthInCm * ($heightSvgInCm/$widthSvgInCm);
+				$renderer->_addStringAsSVGImage($txtdata['svg'], $widthInCm, $heightInCm);
 			}
         // }
 
