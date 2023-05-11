@@ -126,7 +126,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
         // if($state === DOKU_LEXER_UNMATCHED) {
 			if(preg_match("/(@startlatex|@startmath|<math|<latex|ditaa)/", $txtdata['markup'])){
 				list($widthPngInCm, $heightPngInCm) = $renderer->_odtGetImageSize($txtdata['url']['png']);
-				$renderer->_odtAddImage($txtdata['url']['png'], $widthPngInCm, $heightPngInCm);
+				$renderer->_odtAddImage($txtdata['url']['png'], $widthPngInCm.'cm', $heightPngInCm.'cm');
 			} else {
 				list($widthSvgInCm, $heightSvgInCm) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
 				// $renderer->unformatted("Width: ".$widthSvgInCm."cm");
@@ -135,7 +135,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
 				// as the whole page without margins (but keep the width/height relation!). 
 				$widthInCm = $renderer->_getAbsWidthMindMargins();
 				$heightInCm = $widthInCm * ($heightSvgInCm/$widthSvgInCm);
-				$renderer->_addStringAsSVGImage($txtdata['svg'], $widthInCm, $heightInCm);
+				$renderer->_addStringAsSVGImage($data['markup'], $widthSvgInCm.'cm', $heightSvgInCm.'cm');
 			}
         // }
 
