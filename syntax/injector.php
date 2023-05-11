@@ -129,8 +129,8 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
 				$renderer->_odtAddImage($txtdata['url']['png'], $widthPngInCm, $heightPngInCm);
 			} else {
 				list($widthSvgInCm, $heightSvgInCm) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
-				// $renderer->unformatted("Width: ".$width."cm");
-				// $renderer->unformatted("Height: ".$height."cm");
+				// $renderer->unformatted("Width: ".$widthSvgInCm."cm");
+				// $renderer->unformatted("Height: ".$heightSvgInCm."cm");
 				// When exporting to ODT format always make the SVG as wide
 				// as the whole page without margins (but keep the width/height relation!). 
 				$widthInCm = $renderer->_getAbsWidthMindMargins();
