@@ -106,37 +106,21 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= "</div>";
         break;
         case 'odt': case 'odt_pdf':
-            return $this->_render_odt($renderer, $state, $data);
+            // if($state === DOKU_LEXER_UNMATCHED) {
+    			// Actually the SVG export from ODT plugin is broken, so we'll export as PNG as a workaround instead	    
+    			// if(preg_match("/(@startlatex|@startmath|<math|<latex|ditaa)/", $txtdata['markup'])){
+    				$renderer->_odtAddImage($txtdata['url']['png']);
+    			/* } else {
+    				list($widthSvgInCm, $heightSvgInCm) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
+    				// $renderer->unformatted("Width: ".$widthSvgInCm."cm");
+    				// $renderer->unformatted("Height: ".$heightSvgInCm."cm");
+    				// When exporting to ODT format always make the SVG as wide
+    				// as the whole page without margins (but keep the width/height relation!). 
+    				$renderer->_addStringAsSVGImage($data['markup'], $widthSvgInCm, $heightSvgInCm);
+    			} */
+            // }
         break;
         }
-
-        return true;
-    }
-
-    /**
-     * Render odt output.
-     *
-     * @param Doku_Renderer  $renderer  The renderer
-     * @param int            $state     The state
-     * @param string         $txtdata   The data from the render() function
-     * @param string         $align     img align
-     * @return bool If rendering was successful.
-     */
-    protected function _render_odt(Doku_Renderer $renderer, $state, $txtdata) {
-        // if($state === DOKU_LEXER_UNMATCHED) {
-			// Actually the SVG export from ODT plugin is broken, so we'll export as PNG as a workaround instead	    
-			// if(preg_match("/(@startlatex|@startmath|<math|<latex|ditaa)/", $txtdata['markup'])){
-				list($widthPngInCm, $heightPngInCm) = $renderer->_odtGetImageSize($txtdata['url']['png']);
-				$renderer->_odtAddImage($txtdata['url']['png'], $widthPngInCm, $heightPngInCm);
-			/* } else {
-				list($widthSvgInCm, $heightSvgInCm) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
-				// $renderer->unformatted("Width: ".$widthSvgInCm."cm");
-				// $renderer->unformatted("Height: ".$heightSvgInCm."cm");
-				// When exporting to ODT format always make the SVG as wide
-				// as the whole page without margins (but keep the width/height relation!). 
-				$renderer->_addStringAsSVGImage($data['markup'], $widthSvgInCm, $heightSvgInCm);
-			} */
-        // }
 
         return true;
     }
