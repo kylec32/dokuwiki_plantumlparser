@@ -109,7 +109,7 @@ class syntax_plugin_plantumlparser_injector extends DokuWiki_Syntax_Plugin {
             // if($state === DOKU_LEXER_UNMATCHED) {
     			// Actually the SVG export from ODT plugin is broken, so we'll export as PNG as a workaround instead	    
     			// if(preg_match("/(@startlatex|@startmath|<math|<latex|ditaa)/", $txtdata['markup'])){
-    				$renderer->_odtAddImage($txtdata['url']['png']);
+    				$renderer->_odtAddImage($data['url']['png']);
     			/* } else {
     				list($widthSvgInCm, $heightSvgInCm) = $renderer->_odtGetImageSize($txtdata['url']['svg']);
     				// $renderer->unformatted("Width: ".$widthSvgInCm."cm");
