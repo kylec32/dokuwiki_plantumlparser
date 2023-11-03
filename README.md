@@ -33,3 +33,4 @@ and results in:
 * [Antoine Aflalo](https://github.com/Belphemur)
 * [Eduardo Mozart de Oliveira](https://github.com/coldscientist)
 * [Boris Flader](https://github.com/BorisFlader)
+* [Ralf Stemmer](https://github.com/rstemmer)

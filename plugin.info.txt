@@ -1,7 +1,7 @@
 base   plantumlparser
 author Kyle Carter
 email  kylec32@gmail.com
-date   2021-05-17
+date   2023-11-02
 name   PlantUML Parser
 desc   This plugin takes PlantUML markup from a wiki page and has it displayed in a user's browser.
 url    http://www.dokuwiki.org/plugin:plantumlparser
