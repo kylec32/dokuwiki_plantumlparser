@@ -9,7 +9,7 @@ class action_plugin_plantumlparser extends DokuWiki_Action_Plugin
     }
     
     /**
-    * Fix UML search result in the content
+    * Fix UML search result in the content (Issue #30)
     * When searching for a string that is inside a ``uml`` tag with SVG rendering, 
     * the DokuWiki built-in syntax highlighter breaks SVG content when applying highlight into it. 
     * This function removes the search highlight inside SVG to avoid breaking SVG rendering.
@@ -21,7 +21,6 @@ class action_plugin_plantumlparser extends DokuWiki_Action_Plugin
         $xpath = new DOMXPath($dom);
         
         foreach ($xpath->query("//div[starts-with(@id,'plant-uml-diagram')]//span[contains(@class,'search_hit')]") as $node) {
-            // $text->nodeValue = "TESTE";
             $fragment = $dom->createDocumentFragment();
             $fragment->appendXML($node->nodeValue);
     
